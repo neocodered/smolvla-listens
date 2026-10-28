@@ -6,7 +6,7 @@
 N=${1:-10}
 shift
 PREFIX=${PREFIX:-E2}
-source ~/anaconda3/etc/profile.d/conda.sh && conda activate lerobot
+source "$(conda info --base 2>/dev/null || echo ~/anaconda3)/etc/profile.d/conda.sh" && conda activate lerobot
 export MUJOCO_GL=egl
 cd "$(dirname "$0")/.."
 mkdir -p outputs
