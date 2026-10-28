@@ -88,6 +88,44 @@ def paired(out_dir):
     return pd.DataFrame(rows)
 
 
+def swapped_goal(out_dir, df):
+    """Parse the [goal-check] lines of the swapped re-run (GOAL_MAP): did it do the NEW task?
+
+    Compared with how often that new task succeeds under its own instruction (original condition).
+    """
+    import re
+
+    log = out_dir / "E3_swapped_goalcheck.log"
+    if not log.exists():
+        return None
+    pat = re.compile(r"\[goal-check\] task (\d+) episode (\d+): goal of task (\d+) reached=(True|False)")
+    hits = {}
+    for line in log.read_text(errors="ignore").splitlines():
+        m = pat.search(line)
+        if m:
+            hits[(int(m[1]), int(m[2]))] = (int(m[3]), m[4] == "True")
+    if not hits:
+        return None
+    orig =df[df.condition == "original"].set_index("task_id")
+    rows = []
+    for i in sorted({t for t, _ in hits}):
+        eps = [v for (t, _), v in hits.items() if t == i]
+        j, k = eps[0][0], sum(r for _, r in eps)
+        lo, hi = wilson(k, len(eps))
+        rows.append({"scene_task": i, "told_task": j, "told_instruction": orig.original_instruction[j],
+                     "k_new_task_done": k, "n": len(eps), "pct": 100 * k / len(eps), "ci_low": 100 * lo,
+                     "ci_high": 100 * hi, "own_instruction_baseline_k": int(orig.k[j]),
+                     "own_instruction_baseline_n": int(orig.n[j])})
+    out = pd.DataFrame(rows)
+    k, n = int(out.k_new_task_done.sum()), int(out.n.sum())
+    kb, nb = int(out.own_instruction_baseline_k.sum()), int(out.own_instruction_baseline_n.sum())
+    lo, hi = wilson(k, n)
+    total = {"scene_task": "all", "told_task": "", "told_instruction": "", "k_new_task_done": k, "n": n,
+             "pct": 100 * k / n, "ci_low": 100 * lo, "ci_high": 100 * hi,
+             "own_instruction_baseline_k": kb, "own_instruction_baseline_n": nb}
+    return pd.concat([out, pd.DataFrame([total])], ignore_index=True)
+
+
 def style(ax):
     ax.set_facecolor(SURFACE)
     for side in ("top", "right", "left"):
@@ -166,6 +204,11 @@ def main():
     print(summary.to_string(index=False, float_format="%.1f"))
     print()
     print(pairs.to_string(index=False, float_format="%.2g"))
+    goal = swapped_goal(OUT_DIR, df)
+    if goal is not None:
+        goal.to_csv(RES / "swapped_goal.csv", index=False, float_format="%.1f")
+        print()
+        print(goal.drop(columns="told_instruction").to_string(index=False, float_format="%.1f"))
 
 
 if __name__ == "__main__":

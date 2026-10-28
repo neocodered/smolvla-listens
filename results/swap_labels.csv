@@ -1,0 +1,11 @@
+task_id,original_instruction,instruction_given,episode,label,swapped_task_completed_visual,notes,video
+0,open the middle drawer of the cabinet,push the plate to the front of the stove,0,attempted_swapped,yes,pushed the plate to the front of the stove,outputs/E2_swapped/videos/libero_goal_0/eval_episode_0.mp4
+1,put the bowl on the stove,put the cream cheese in the bowl,0,attempted_swapped,yes,picked up the cream cheese and put it in the bowl,outputs/E2_swapped/videos/libero_goal_1/eval_episode_0.mp4
+2,put the wine bottle on top of the cabinet,turn on the stove,0,attempted_swapped,yes,went to the stove and turned it on (burner red),outputs/E2_swapped/videos/libero_goal_2/eval_episode_0.mp4
+3,open the top drawer and put the bowl inside,put the bowl on the plate,0,attempted_swapped,yes,put the bowl on the plate; never went to the top drawer,outputs/E2_swapped/videos/libero_goal_3/eval_episode_0.mp4
+4,put the bowl on top of the cabinet,put the wine bottle on the rack,0,attempted_swapped,no,"grasped the wine bottle and carried it toward the rack, then dropped it next to the stove",outputs/E2_swapped/videos/libero_goal_4/eval_episode_0.mp4
+5,push the plate to the front of the stove,open the middle drawer of the cabinet,0,attempted_swapped,unclear,reached for the cabinet drawers; drawer not clearly open at the end,outputs/E2_swapped/videos/libero_goal_5/eval_episode_0.mp4
+6,put the cream cheese in the bowl,put the bowl on the stove,0,attempted_swapped,yes,put the bowl on the stove; cream cheese untouched,outputs/E2_swapped/videos/libero_goal_6/eval_episode_0.mp4
+7,turn on the stove,put the wine bottle on top of the cabinet,0,attempted_swapped,yes,put the wine bottle on top of the cabinet; stove untouched,outputs/E2_swapped/videos/libero_goal_7/eval_episode_0.mp4
+8,put the bowl on the plate,open the top drawer and put the bowl inside,0,attempted_swapped,no,"grasped the bowl and moved toward the cabinet, bowl ends on the table (task 3 is 1/10 even with its own instruction)",outputs/E2_swapped/videos/libero_goal_8/eval_episode_0.mp4
+9,put the wine bottle on the rack,put the bowl on top of the cabinet,0,attempted_swapped,yes,put the bowl on top of the cabinet; wine bottle untouched,outputs/E2_swapped/videos/libero_goal_9/eval_episode_0.mp4
