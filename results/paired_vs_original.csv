@@ -1,0 +1,5 @@
+condition,both_succeed,only_original,only_condition,mcnemar_p
+paraphrase_a,38,36,3,3.61e-08
+paraphrase_b,9,65,3,3.56e-16
+empty,0,74,0,1.06e-22
+swapped,0,74,0,1.06e-22
